@@ -1,0 +1,36 @@
+.keyboad {
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.white {
+  fill: #fff;
+  stroke: #000;
+  stroke-width: 1px;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+}
+
+.white:hover {
+  fill: #eee;
+}
+
+.black {
+  fill: #000;
+  stroke: #000;
+  stroke-width: 1px;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+}
+
+.black:hover {
+  fill: #222;
+}
+
+.text {
+  fill: #444;
+  font-size: 30px;
+  font-weight: bold;
+  pointer-events: none;
+  user-select: none;
+}
