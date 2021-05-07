@@ -1,9 +1,9 @@
-import Keyboad from '../components/keyboad';
+import Keyboard from './components/keyboard';
 
 function testPage() {
   return (
     <>
-      <Keyboad />
+      <Keyboard />
     </>
   );
 }
