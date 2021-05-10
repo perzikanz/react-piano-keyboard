@@ -13,18 +13,21 @@
     "@babel/preset-env": "^7.14.1",
     "@babel/preset-react": "^7.13.13",
     "@types/react": "^17.0.4",
+    "@types/react-dom": "^17.0.3",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.4",
     "dotenv": "^9.0.0",
     "html-loader": "^2.1.2",
     "html-webpack-plugin": "^5.3.1",
     "style-loader": "^2.0.0",
+    "ts-loader": "^9.1.2",
     "typescript": "^4.2.4",
     "webpack": "^5.36.2",
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^3.11.2"
   },
   "scripts": {
-    "build": "tsc"
+    "dev": "webpack-cli serve --mode development",
+    "build": "webpack --mode production"
   }
 }
