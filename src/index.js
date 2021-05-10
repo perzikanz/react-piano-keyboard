@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Keyboard from './components/keyboard';
+import { SRC } from './public/src';
 
 ReactDOM.render(
-  <Keyboard src={[]} keyboadLength={7} text={true} firstScale={0} />,
+  <Keyboard src={SRC} keyboadLength={7} text={true} firstScale={0} />,
   document.getElementById('root')
 );
