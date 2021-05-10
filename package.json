@@ -1,7 +1,8 @@
 {
   "name": "react-piano-keyboard",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "repository": "https://github.com/perzikanz/react-piano-keyboard",
   "author": "perzikanz",
   "license": "MIT",
   "dependencies": {
@@ -28,6 +29,6 @@
   },
   "scripts": {
     "dev": "webpack-cli serve --mode development",
-    "build": "webpack --mode production"
+    "build": "tsc"
   }
 }
