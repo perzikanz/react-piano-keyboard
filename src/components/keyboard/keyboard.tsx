@@ -14,14 +14,28 @@ import {
   BLACK_KEY_LEVEL,
 } from './constant';
 
-export function keyboard() {
+type Props = {
+  src: string[];
+  keyboadLength: number;
+  text: boolean;
+  firstScale: number;
+};
+
+export const keyboard: React.FC<Props> = (props) => {
   let whiteKeys: JSX.Element[] = [];
   let whiteX = 0;
-  for (let i = 0; i < OCTAVE_NUM; i++) {
+  let keyboadLength: number;
+
+  let srcNum = 0;
+
+  keyboadLength = props.keyboadLength;
+
+  for (let i = 0; i < keyboadLength; i++) {
     let octave = i;
     for (let i = 0; i < WHITE_KEY_NUM; i++) {
       const keyName = `${WHITE_KEY_LEVEL[i]}${octave}`;
-      const src = `src/public/audio/${keyName}.mp3`;
+      const src = props.src[srcNum];
+      srcNum = srcNum + 1;
       let setAudio: HTMLAudioElement;
       useEffect(() => {
         setAudio = new Audio(src);
@@ -40,11 +54,12 @@ export function keyboard() {
         />
       );
       whiteKeys.push(whiteKey);
-      whiteX = whiteX + 80;
+      whiteX = whiteX + WHITE_KEY_WIDTH;
     }
   }
-  {
-    const src = `src/public/audio/c7.mp3`;
+  if (props.keyboadLength == 7) {
+    const src = props.src[srcNum];
+    srcNum = srcNum + 1;
     let setAudio: HTMLAudioElement;
     useEffect(() => {
       setAudio = new Audio(src);
@@ -62,17 +77,18 @@ export function keyboard() {
         key='c7'
       />
     );
-    whiteX = whiteX + 80;
+    whiteX = whiteX + WHITE_KEY_WIDTH;
   }
 
   let blackKeys: JSX.Element[] = [];
   let blackX = 0;
-  for (let i = 0; i < OCTAVE_NUM; i++) {
+  for (let i = 0; i < keyboadLength; i++) {
     let octave = i;
     blackX = blackX + BLACK_KEY_WIDTH;
     for (let i = 0; i < BLUCK_KEY_NUM; i++) {
       const keyName = `${BLACK_KEY_LEVEL[i]}${octave}`;
-      const src = `src/public/audio/${keyName}.mp3`;
+      const src = props.src[srcNum];
+      srcNum = srcNum + 1;
       let setAudio: HTMLAudioElement;
       useEffect(() => {
         setAudio = new Audio(src);
@@ -96,16 +112,20 @@ export function keyboard() {
   }
 
   let keyTexts: JSX.Element[] = [];
-  let textX = 20;
-  const TEXT_Y = 380;
-  for (let i = 0; i <= OCTAVE_NUM; i++) {
-    const keyText = (
-      <text x={textX} y={TEXT_Y} className={'text'} key={`Ct${i}`}>
-        C{i}
-      </text>
-    );
-    keyTexts.push(keyText);
-    textX = textX + 560;
+  if (props.text == true) {
+    let textX = 20;
+    const TEXT_Y = 380;
+    let n = props.firstScale;
+    for (let i = 0; i <= keyboadLength; i++) {
+      const keyText = (
+        <text x={textX} y={TEXT_Y} className={'text'} key={`Ct${i}`}>
+          C{n}
+        </text>
+      );
+      keyTexts.push(keyText);
+      textX = textX + 560;
+      n = n + 1;
+    }
   }
 
   const SVG_WIDTH = whiteX + 2;
@@ -124,7 +144,7 @@ export function keyboard() {
       </svg>
     </div>
   );
-}
+};
 
 const playPiano = (audio: HTMLAudioElement) => {
   if (!audio.seeking || audio.currentTime !== 0) {
