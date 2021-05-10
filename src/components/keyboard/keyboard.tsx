@@ -21,7 +21,7 @@ export function keyboard() {
     let octave = i;
     for (let i = 0; i < WHITE_KEY_NUM; i++) {
       const keyName = `${WHITE_KEY_LEVEL[i]}${octave}`;
-      const src = `../../audio/${keyName}.mp3`;
+      const src = `src/public/audio/${keyName}.mp3`;
       let setAudio: HTMLAudioElement;
       useEffect(() => {
         setAudio = new Audio(src);
@@ -44,7 +44,7 @@ export function keyboard() {
     }
   }
   {
-    const src = `../../audio/c7.mp3`;
+    const src = `src/public/audio/c7.mp3`;
     let setAudio: HTMLAudioElement;
     useEffect(() => {
       setAudio = new Audio(src);
@@ -72,7 +72,7 @@ export function keyboard() {
     blackX = blackX + BLACK_KEY_WIDTH;
     for (let i = 0; i < BLUCK_KEY_NUM; i++) {
       const keyName = `${BLACK_KEY_LEVEL[i]}${octave}`;
-      const src = `../../audio/${keyName}.mp3`;
+      const src = `src/public/audio/${keyName}.mp3`;
       let setAudio: HTMLAudioElement;
       useEffect(() => {
         setAudio = new Audio(src);
