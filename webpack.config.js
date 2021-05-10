@@ -3,7 +3,7 @@ const path = require('path');
 require('dotenv').config();
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/public/index.js',
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'index_bundle.js',
@@ -47,7 +47,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: './src/index.ejs',
+      template: './src/public/index.ejs',
       filename: './index.html',
       templateParameters: {
         scriptSrc: process.env.BUNDLE_PATH,
