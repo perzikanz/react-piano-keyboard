@@ -16,7 +16,7 @@ import {
 
 export function keyboard() {
   let whiteKeys: JSX.Element[] = [];
-  let whiteX: number = 0;
+  let whiteX = 0;
   for (let i = 0; i < OCTAVE_NUM; i++) {
     let octave = i;
     for (let i = 0; i < WHITE_KEY_NUM; i++) {
@@ -66,7 +66,7 @@ export function keyboard() {
   }
 
   let blackKeys: JSX.Element[] = [];
-  let blackX: number = 0;
+  let blackX = 0;
   for (let i = 0; i < OCTAVE_NUM; i++) {
     let octave = i;
     blackX = blackX + BLACK_KEY_WIDTH;
@@ -96,7 +96,7 @@ export function keyboard() {
   }
 
   let keyTexts: JSX.Element[] = [];
-  let textX: number = 20;
+  let textX = 20;
   const TEXT_Y = 380;
   for (let i = 0; i <= OCTAVE_NUM; i++) {
     const keyText = (
