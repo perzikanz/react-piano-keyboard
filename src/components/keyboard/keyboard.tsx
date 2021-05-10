@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import './keyboard.css';
 
 import {
-  OCTAVE_NUM,
   WHITE_KEY_NUM,
   BLUCK_KEY_NUM,
   WHITE_KEY_WIDTH,

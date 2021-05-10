@@ -3,7 +3,6 @@
 黒鍵：50*225, 5こ, (40,100,35,35,50)
 */
 
-export const OCTAVE_NUM = 7;
 export const WHITE_KEY_NUM = 7;
 export const BLUCK_KEY_NUM = 5;
 
