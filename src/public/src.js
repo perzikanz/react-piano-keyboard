@@ -1,4 +1,4 @@
-export const SRC = [
+export const SRC_ARRAY = [
   'src/public/audio/c0.mp3',
   'src/public/audio/d0.mp3',
   'src/public/audio/e0.mp3',
