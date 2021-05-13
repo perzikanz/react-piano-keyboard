@@ -14,9 +14,9 @@ import {
 } from './constant';
 
 type Props = {
-  src: string[];
+  srcArray: string[];
   keyboadLength: number;
-  text: boolean;
+  keyText: boolean;
   firstScale: number;
 };
 
@@ -33,7 +33,7 @@ export const keyboard: React.FC<Props> = (props) => {
     let octave = i;
     for (let i = 0; i < WHITE_KEY_NUM; i++) {
       const keyName = `${WHITE_KEY_LEVEL[i]}${octave}`;
-      const src = props.src[srcNum];
+      const src = props.srcArray[srcNum];
       srcNum = srcNum + 1;
       let setAudio: HTMLAudioElement;
       useEffect(() => {
@@ -57,7 +57,7 @@ export const keyboard: React.FC<Props> = (props) => {
     }
   }
   if (props.keyboadLength == 7) {
-    const src = props.src[srcNum];
+    const src = props.srcArray[srcNum];
     srcNum = srcNum + 1;
     let setAudio: HTMLAudioElement;
     useEffect(() => {
@@ -86,7 +86,7 @@ export const keyboard: React.FC<Props> = (props) => {
     blackX = blackX + BLACK_KEY_WIDTH;
     for (let i = 0; i < BLUCK_KEY_NUM; i++) {
       const keyName = `${BLACK_KEY_LEVEL[i]}${octave}`;
-      const src = props.src[srcNum];
+      const src = props.srcArray[srcNum];
       srcNum = srcNum + 1;
       let setAudio: HTMLAudioElement;
       useEffect(() => {
@@ -111,7 +111,7 @@ export const keyboard: React.FC<Props> = (props) => {
   }
 
   let keyTexts: JSX.Element[] = [];
-  if (props.text == true) {
+  if (props.keyText == true) {
     let textX = 20;
     const TEXT_Y = 380;
     let n = props.firstScale;
