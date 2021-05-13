@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import './keyboard.css';
+// import './keyboard.css';
 
 import {
   WHITE_KEY_NUM,
@@ -35,10 +35,7 @@ export const keyboard: React.FC<Props> = (props) => {
       const keyName = `${WHITE_KEY_LEVEL[i]}${octave}`;
       const src = props.srcArray[srcNum];
       srcNum = srcNum + 1;
-      let setAudio: HTMLAudioElement;
-      useEffect(() => {
-        setAudio = new Audio(src);
-      });
+      const audio = new Audio(src);
       const whiteKey = (
         <rect
           x={whiteX}
@@ -47,7 +44,7 @@ export const keyboard: React.FC<Props> = (props) => {
           height={WHITE_KEY_HEIGHT}
           className={'white'}
           onMouseDown={() => {
-            playPiano(setAudio);
+            playPiano(audio);
           }}
           key={keyName}
         />
@@ -59,10 +56,7 @@ export const keyboard: React.FC<Props> = (props) => {
   if (props.keyboadLength == 7) {
     const src = props.srcArray[srcNum];
     srcNum = srcNum + 1;
-    let setAudio: HTMLAudioElement;
-    useEffect(() => {
-      setAudio = new Audio(src);
-    });
+    const audio = new Audio(src);
     whiteKeys.push(
       <rect
         x={whiteX}
@@ -71,7 +65,7 @@ export const keyboard: React.FC<Props> = (props) => {
         height={WHITE_KEY_HEIGHT}
         className={'white'}
         onMouseDown={() => {
-          playPiano(setAudio);
+          playPiano(audio);
         }}
         key='c7'
       />
@@ -88,10 +82,7 @@ export const keyboard: React.FC<Props> = (props) => {
       const keyName = `${BLACK_KEY_LEVEL[i]}${octave}`;
       const src = props.srcArray[srcNum];
       srcNum = srcNum + 1;
-      let setAudio: HTMLAudioElement;
-      useEffect(() => {
-        setAudio = new Audio(src);
-      });
+      const audio = new Audio(src);
       const blackKey = (
         <rect
           x={blackX}
@@ -100,7 +91,7 @@ export const keyboard: React.FC<Props> = (props) => {
           height={BLACK_KEY_HEIGHT}
           className={'black'}
           onMouseDown={() => {
-            playPiano(setAudio);
+            playPiano(audio);
           }}
           key={keyName}
         />
