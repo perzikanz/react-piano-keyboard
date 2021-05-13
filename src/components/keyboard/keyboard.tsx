@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import './keyboard.css';
+import React from 'react';
 
 import {
   WHITE_KEY_NUM,
@@ -12,6 +11,13 @@ import {
   BLACK_KEY_SPASE,
   BLACK_KEY_LEVEL,
 } from './constant';
+
+import {
+  keyboardStyle,
+  whiteKeyStyle,
+  blackKeyStyle,
+  keyTextStyle,
+} from './keyboardStyle';
 
 type Props = {
   srcArray: string[];
@@ -35,19 +41,16 @@ export const keyboard: React.FC<Props> = (props) => {
       const keyName = `${WHITE_KEY_LEVEL[i]}${octave}`;
       const src = props.srcArray[srcNum];
       srcNum = srcNum + 1;
-      let setAudio: HTMLAudioElement;
-      useEffect(() => {
-        setAudio = new Audio(src);
-      });
+      const audio = new Audio(src);
       const whiteKey = (
         <rect
           x={whiteX}
           y={0}
           width={WHITE_KEY_WIDTH}
           height={WHITE_KEY_HEIGHT}
-          className={'white'}
+          style={whiteKeyStyle}
           onMouseDown={() => {
-            playPiano(setAudio);
+            playPiano(audio);
           }}
           key={keyName}
         />
@@ -59,19 +62,16 @@ export const keyboard: React.FC<Props> = (props) => {
   if (props.keyboadLength == 7) {
     const src = props.srcArray[srcNum];
     srcNum = srcNum + 1;
-    let setAudio: HTMLAudioElement;
-    useEffect(() => {
-      setAudio = new Audio(src);
-    });
+    const audio = new Audio(src);
     whiteKeys.push(
       <rect
         x={whiteX}
         y={0}
         width={WHITE_KEY_WIDTH}
         height={WHITE_KEY_HEIGHT}
-        className={'white'}
+        style={whiteKeyStyle}
         onMouseDown={() => {
-          playPiano(setAudio);
+          playPiano(audio);
         }}
         key='c7'
       />
@@ -88,19 +88,16 @@ export const keyboard: React.FC<Props> = (props) => {
       const keyName = `${BLACK_KEY_LEVEL[i]}${octave}`;
       const src = props.srcArray[srcNum];
       srcNum = srcNum + 1;
-      let setAudio: HTMLAudioElement;
-      useEffect(() => {
-        setAudio = new Audio(src);
-      });
+      const audio = new Audio(src);
       const blackKey = (
         <rect
           x={blackX}
           y={0}
           width={BLACK_KEY_WIDTH}
           height={BLACK_KEY_HEIGHT}
-          className={'black'}
+          style={blackKeyStyle}
           onMouseDown={() => {
-            playPiano(setAudio);
+            playPiano(audio);
           }}
           key={keyName}
         />
@@ -117,7 +114,7 @@ export const keyboard: React.FC<Props> = (props) => {
     let n = props.firstScale;
     for (let i = 0; i <= keyboadLength; i++) {
       const keyText = (
-        <text x={textX} y={TEXT_Y} className={'text'} key={`Ct${i}`}>
+        <text x={textX} y={TEXT_Y} style={keyTextStyle} key={`Ct${i}`}>
           C{n}
         </text>
       );
@@ -131,7 +128,7 @@ export const keyboard: React.FC<Props> = (props) => {
   const SVG_HEIGHT = WHITE_KEY_HEIGHT + 2;
 
   return (
-    <div className={'keyboard'}>
+    <div style={keyboardStyle}>
       <svg
         width={SVG_WIDTH}
         height={SVG_HEIGHT}
