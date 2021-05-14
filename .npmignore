@@ -1,0 +1,17 @@
+# node modules
+node_modules/
+
+# setting files
+.babelrc
+.env
+.tsconfig.json
+webpack.config.js
+
+# git ignore file
+.gitignore
+
+# source files
+src/
+
+# demo files
+demo/
