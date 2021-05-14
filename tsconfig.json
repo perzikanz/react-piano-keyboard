@@ -14,7 +14,8 @@
     "isolatedModules": true,
     "jsx": "react",
     "outDir": "./dist",
-    "declaration": true
+    "declaration": true,
+    "removeComments": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "src/public/**/*"]
