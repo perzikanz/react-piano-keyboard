@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   WHITE_KEY_NUM,
@@ -12,12 +12,7 @@ import {
   BLACK_KEY_LEVEL,
 } from './constant';
 
-import {
-  keyboardStyle,
-  whiteKeyStyle,
-  blackKeyStyle,
-  keyTextStyle,
-} from './keyboardStyle';
+import style from './keyboardStyle';
 
 type Props = {
   srcArray: string[];
@@ -29,11 +24,9 @@ type Props = {
 export const keyboard: React.FC<Props> = (props) => {
   let whiteKeys: JSX.Element[] = [];
   let whiteX = 0;
-  let keyboadLength: number;
 
   let srcNum = 0;
-
-  keyboadLength = props.keyboadLength;
+  const keyboadLength = props.keyboadLength;
 
   for (let i = 0; i < keyboadLength; i++) {
     let octave = i;
@@ -42,15 +35,22 @@ export const keyboard: React.FC<Props> = (props) => {
       const src = props.srcArray[srcNum];
       srcNum = srcNum + 1;
       const audio = new Audio(src);
+      const [hover, setHover] = useState(false);
       const whiteKey = (
         <rect
           x={whiteX}
           y={0}
           width={WHITE_KEY_WIDTH}
           height={WHITE_KEY_HEIGHT}
-          style={whiteKeyStyle}
+          style={{ ...style.whiteKey, ...(hover ? style.whiteKeyHover : null) }}
           onMouseDown={() => {
             playPiano(audio);
+          }}
+          onMouseOver={() => {
+            setHover(true);
+          }}
+          onMouseOut={() => {
+            setHover(false);
           }}
           key={keyName}
         />
@@ -59,19 +59,26 @@ export const keyboard: React.FC<Props> = (props) => {
       whiteX = whiteX + WHITE_KEY_WIDTH;
     }
   }
-  if (props.keyboadLength == 7) {
+  if (keyboadLength == 7) {
     const src = props.srcArray[srcNum];
     srcNum = srcNum + 1;
     const audio = new Audio(src);
+    const [hover, setHover] = useState(false);
     whiteKeys.push(
       <rect
         x={whiteX}
         y={0}
         width={WHITE_KEY_WIDTH}
         height={WHITE_KEY_HEIGHT}
-        style={whiteKeyStyle}
+        style={{ ...style.whiteKey, ...(hover ? style.whiteKeyHover : null) }}
         onMouseDown={() => {
           playPiano(audio);
+        }}
+        onMouseOver={() => {
+          setHover(true);
+        }}
+        onMouseOut={() => {
+          setHover(false);
         }}
         key='c7'
       />
@@ -89,15 +96,22 @@ export const keyboard: React.FC<Props> = (props) => {
       const src = props.srcArray[srcNum];
       srcNum = srcNum + 1;
       const audio = new Audio(src);
+      const [hover, setHover] = useState(false);
       const blackKey = (
         <rect
           x={blackX}
           y={0}
           width={BLACK_KEY_WIDTH}
           height={BLACK_KEY_HEIGHT}
-          style={blackKeyStyle}
+          style={{ ...style.blackKey, ...(hover ? style.blackKeyHover : null) }}
           onMouseDown={() => {
             playPiano(audio);
+          }}
+          onMouseOver={() => {
+            setHover(true);
+          }}
+          onMouseOut={() => {
+            setHover(false);
           }}
           key={keyName}
         />
@@ -114,7 +128,7 @@ export const keyboard: React.FC<Props> = (props) => {
     let n = props.firstScale;
     for (let i = 0; i <= keyboadLength; i++) {
       const keyText = (
-        <text x={textX} y={TEXT_Y} style={keyTextStyle} key={`Ct${i}`}>
+        <text x={textX} y={TEXT_Y} style={style.keyText} key={`Ct${i}`}>
           C{n}
         </text>
       );
@@ -128,7 +142,7 @@ export const keyboard: React.FC<Props> = (props) => {
   const SVG_HEIGHT = WHITE_KEY_HEIGHT + 2;
 
   return (
-    <div style={keyboardStyle}>
+    <div style={style.keyboard}>
       <svg
         width={SVG_WIDTH}
         height={SVG_HEIGHT}
