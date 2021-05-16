@@ -3,6 +3,7 @@
 ## 概要
 
 クリックで演奏できる ピアノ鍵盤の React コンポーネントです。
+<img src="https://user-images.githubusercontent.com/65535030/118248919-ccb43180-b4df-11eb-813c-8d8dabe9cb07.png" width="500" />
 
 ## 使い方
 
