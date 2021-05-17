@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import {
   WHITE_KEY_NUM,
@@ -35,7 +35,6 @@ export const keyboard: React.FC<Props> = (props) => {
       const src = props.srcArray[srcNum];
       srcNum = srcNum + 1;
       const audio = new Audio(src);
-      const [hover, setHover] = useState(false);
       const whiteKey = (
         <rect
           x={whiteX}
@@ -45,12 +44,6 @@ export const keyboard: React.FC<Props> = (props) => {
           className={props.className}
           onMouseDown={() => {
             playPiano(audio);
-          }}
-          onMouseOver={() => {
-            setHover(true);
-          }}
-          onMouseOut={() => {
-            setHover(false);
           }}
           key={keyName}
         />
@@ -63,7 +56,6 @@ export const keyboard: React.FC<Props> = (props) => {
     const src = props.srcArray[srcNum];
     srcNum = srcNum + 1;
     const audio = new Audio(src);
-    const [hover, setHover] = useState(false);
     whiteKeys.push(
       <rect
         x={whiteX}
@@ -73,12 +65,6 @@ export const keyboard: React.FC<Props> = (props) => {
         className={props.className}
         onMouseDown={() => {
           playPiano(audio);
-        }}
-        onMouseOver={() => {
-          setHover(true);
-        }}
-        onMouseOut={() => {
-          setHover(false);
         }}
         key='c7'
       />
@@ -96,7 +82,6 @@ export const keyboard: React.FC<Props> = (props) => {
       const src = props.srcArray[srcNum];
       srcNum = srcNum + 1;
       const audio = new Audio(src);
-      const [hover, setHover] = useState(false);
       const blackKey = (
         <rect
           x={blackX}
@@ -106,12 +91,6 @@ export const keyboard: React.FC<Props> = (props) => {
           className={props.className}
           onMouseDown={() => {
             playPiano(audio);
-          }}
-          onMouseOver={() => {
-            setHover(true);
-          }}
-          onMouseOut={() => {
-            setHover(false);
           }}
           key={keyName}
         />
