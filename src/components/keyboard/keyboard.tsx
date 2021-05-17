@@ -18,10 +18,12 @@ type Props = {
   srcArray: string[];
   keyboadLength: number;
   keyText: boolean;
-  firstScale: number;
+  firstScale?: number;
+  className?: string;
 };
 
 export const keyboard: React.FC<Props> = (props) => {
+  const { firstScale = 0 } = props;
   let whiteKeys: JSX.Element[] = [];
   let whiteX = 0;
 
@@ -43,6 +45,7 @@ export const keyboard: React.FC<Props> = (props) => {
           width={WHITE_KEY_WIDTH}
           height={WHITE_KEY_HEIGHT}
           style={{ ...style.whiteKey, ...(hover ? style.whiteKeyHover : null) }}
+          className={props.className}
           onMouseDown={() => {
             playPiano(audio);
           }}
@@ -71,6 +74,7 @@ export const keyboard: React.FC<Props> = (props) => {
         width={WHITE_KEY_WIDTH}
         height={WHITE_KEY_HEIGHT}
         style={{ ...style.whiteKey, ...(hover ? style.whiteKeyHover : null) }}
+        className={props.className}
         onMouseDown={() => {
           playPiano(audio);
         }}
@@ -104,6 +108,7 @@ export const keyboard: React.FC<Props> = (props) => {
           width={BLACK_KEY_WIDTH}
           height={BLACK_KEY_HEIGHT}
           style={{ ...style.blackKey, ...(hover ? style.blackKeyHover : null) }}
+          className={props.className}
           onMouseDown={() => {
             playPiano(audio);
           }}
@@ -125,10 +130,16 @@ export const keyboard: React.FC<Props> = (props) => {
   if (props.keyText == true) {
     let textX = 20;
     const TEXT_Y = 380;
-    let n = props.firstScale;
+    let n = firstScale;
     for (let i = 0; i <= keyboadLength; i++) {
       const keyText = (
-        <text x={textX} y={TEXT_Y} style={style.keyText} key={`Ct${i}`}>
+        <text
+          x={textX}
+          y={TEXT_Y}
+          style={style.keyText}
+          className={props.className}
+          key={`Ct${i}`}
+        >
           C{n}
         </text>
       );
@@ -142,7 +153,7 @@ export const keyboard: React.FC<Props> = (props) => {
   const SVG_HEIGHT = WHITE_KEY_HEIGHT + 2;
 
   return (
-    <div style={style.keyboard}>
+    <div style={style.keyboard} className={props.className}>
       <svg
         width={SVG_WIDTH}
         height={SVG_HEIGHT}
