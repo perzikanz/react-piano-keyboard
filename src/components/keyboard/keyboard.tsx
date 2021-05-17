@@ -12,14 +12,12 @@ import {
   BLACK_KEY_LEVEL,
 } from './constant';
 
-import style from './keyboardStyle';
-
 type Props = {
   srcArray: string[];
   keyboadLength: number;
   keyText: boolean;
   firstScale?: number;
-  className?: string;
+  className: string;
 };
 
 export const keyboard: React.FC<Props> = (props) => {
@@ -44,7 +42,6 @@ export const keyboard: React.FC<Props> = (props) => {
           y={0}
           width={WHITE_KEY_WIDTH}
           height={WHITE_KEY_HEIGHT}
-          style={{ ...style.whiteKey, ...(hover ? style.whiteKeyHover : null) }}
           className={props.className}
           onMouseDown={() => {
             playPiano(audio);
@@ -73,7 +70,6 @@ export const keyboard: React.FC<Props> = (props) => {
         y={0}
         width={WHITE_KEY_WIDTH}
         height={WHITE_KEY_HEIGHT}
-        style={{ ...style.whiteKey, ...(hover ? style.whiteKeyHover : null) }}
         className={props.className}
         onMouseDown={() => {
           playPiano(audio);
@@ -107,7 +103,6 @@ export const keyboard: React.FC<Props> = (props) => {
           y={0}
           width={BLACK_KEY_WIDTH}
           height={BLACK_KEY_HEIGHT}
-          style={{ ...style.blackKey, ...(hover ? style.blackKeyHover : null) }}
           className={props.className}
           onMouseDown={() => {
             playPiano(audio);
@@ -133,13 +128,7 @@ export const keyboard: React.FC<Props> = (props) => {
     let n = firstScale;
     for (let i = 0; i <= keyboadLength; i++) {
       const keyText = (
-        <text
-          x={textX}
-          y={TEXT_Y}
-          style={style.keyText}
-          className={props.className}
-          key={`Ct${i}`}
-        >
+        <text x={textX} y={TEXT_Y} className={props.className} key={`Ct${i}`}>
           C{n}
         </text>
       );
@@ -153,7 +142,7 @@ export const keyboard: React.FC<Props> = (props) => {
   const SVG_HEIGHT = WHITE_KEY_HEIGHT + 2;
 
   return (
-    <div style={style.keyboard} className={props.className}>
+    <div className={props.className}>
       <svg
         width={SVG_WIDTH}
         height={SVG_HEIGHT}
