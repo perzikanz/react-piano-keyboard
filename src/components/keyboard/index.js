@@ -1,3 +1,3 @@
-import { keyboard } from './keyboard';
+import { divKeyboard } from './keyboard';
 
-export default keyboard;
+export default divKeyboard;

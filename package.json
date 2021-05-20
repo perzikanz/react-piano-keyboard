@@ -29,7 +29,8 @@
     "webpack-dev-server": "^3.11.2"
   },
   "scripts": {
-    "dev": "webpack-cli serve --mode development",
+    "start": "webpack-cli serve --mode development",
+    "dev": "tsc -w",
     "build": "tsc"
   }
 }

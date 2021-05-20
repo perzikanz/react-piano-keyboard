@@ -17,11 +17,26 @@ type Props = {
   keyboadLength: number;
   keyText: boolean;
   firstScale?: number;
-  className: string;
+  className?: {
+    keyboard: string;
+    whiteKey: string;
+    blackKey: string;
+    text: string;
+  };
+  keybardWidth: number;
+  activeKey?: string[];
 };
 
 export const keyboard: React.FC<Props> = (props) => {
-  const { firstScale = 0 } = props;
+  const {
+    firstScale = 0,
+    className = {
+      keyboard: 'keyboard',
+      whiteKey: 'whiteKey',
+      blackKey: 'blackKey',
+      text: 'text',
+    },
+  } = props;
   let whiteKeys: JSX.Element[] = [];
   let whiteX = 0;
 
@@ -41,7 +56,7 @@ export const keyboard: React.FC<Props> = (props) => {
           y={0}
           width={WHITE_KEY_WIDTH}
           height={WHITE_KEY_HEIGHT}
-          className={props.className}
+          className={className.whiteKey}
           onMouseDown={() => {
             playPiano(audio);
           }}
@@ -62,7 +77,7 @@ export const keyboard: React.FC<Props> = (props) => {
         y={0}
         width={WHITE_KEY_WIDTH}
         height={WHITE_KEY_HEIGHT}
-        className={props.className}
+        className={className.whiteKey}
         onMouseDown={() => {
           playPiano(audio);
         }}
@@ -88,7 +103,7 @@ export const keyboard: React.FC<Props> = (props) => {
           y={0}
           width={BLACK_KEY_WIDTH}
           height={BLACK_KEY_HEIGHT}
-          className={props.className}
+          className={className.blackKey}
           onMouseDown={() => {
             playPiano(audio);
           }}
@@ -107,7 +122,7 @@ export const keyboard: React.FC<Props> = (props) => {
     let n = firstScale;
     for (let i = 0; i <= keyboadLength; i++) {
       const keyText = (
-        <text x={textX} y={TEXT_Y} className={props.className} key={`Ct${i}`}>
+        <text x={textX} y={TEXT_Y} className={className.text} key={`Ct${i}`}>
           C{n}
         </text>
       );
@@ -121,7 +136,7 @@ export const keyboard: React.FC<Props> = (props) => {
   const SVG_HEIGHT = WHITE_KEY_HEIGHT + 2;
 
   return (
-    <div className={props.className}>
+    <div className={className.keyboard}>
       <svg
         width={SVG_WIDTH}
         height={SVG_HEIGHT}
@@ -140,4 +155,92 @@ const playPiano = (audio: HTMLAudioElement) => {
     audio.currentTime = 0;
   }
   audio.play();
+};
+
+export const divKeyboard: React.FC<Props> = (props) => {
+  const { firstScale = 0 } = props;
+  const { activeKey = [] } = props;
+
+  let whiteKeys: JSX.Element[] = [];
+  let blackKeys: JSX.Element[] = [];
+
+  const keybardWidth = `${props.keybardWidth}px`;
+  const keybardStyle = {
+    width: keybardWidth,
+  };
+
+  const whiteKeysStyle = {
+    display: 'flex',
+  };
+
+  const whiteKeyWdth = `${(1 / 7) * 100}%`;
+  const whiteKeyStyle = {
+    width: whiteKeyWdth,
+  };
+
+  const blackKeysStyle = {
+    display: 'flex',
+  };
+
+  const blackKeyWidth = `${(1 / 7) * (5 / 8) * 100}%`;
+  const blackKeyStyle = {
+    width: blackKeyWidth,
+  };
+  let blackKeyMargin: string[] = [];
+  for (const spase of BLACK_KEY_SPASE) {
+    const per = (1 / 7) * (spase / 80);
+    const margin = `${per * props.keybardWidth}px`;
+    blackKeyMargin.push(margin);
+  }
+
+  for (let i = 0; i < props.keyboadLength; i++) {
+    let octave = i;
+    for (let i = 0; i < WHITE_KEY_NUM; i++) {
+      const keyScale = firstScale + octave;
+      const keyName = `${WHITE_KEY_LEVEL[i]}${keyScale}`;
+      let selectActive = '';
+      for (const key of activeKey) {
+        if (keyName == key) {
+          selectActive = ' active_key';
+        }
+      }
+      const whiteKey = (
+        <div
+          key={keyName}
+          className={`white_key ${keyName}${selectActive}`}
+          style={whiteKeyStyle}
+        ></div>
+      );
+      whiteKeys.push(whiteKey);
+    }
+    for (let i = 0; i < BLUCK_KEY_NUM; i++) {
+      const keyScale = firstScale + octave;
+      const keyName = `${BLACK_KEY_LEVEL[i]}${keyScale}`;
+      let selectActive = '';
+      for (const key of activeKey) {
+        if (keyName == key) {
+          selectActive = ' active_key';
+        }
+      }
+      const blackKey = (
+        <div
+          key={keyName}
+          className={`black_key ${keyName}${selectActive}`}
+          style={{ ...blackKeyStyle, marginLeft: blackKeyMargin[i] }}
+        ></div>
+      );
+      blackKeys.push(blackKey);
+    }
+  }
+
+  return (
+    <div className='keyboard' style={keybardStyle}>
+      <div className='white_keys' style={whiteKeysStyle}>
+        {whiteKeys}
+      </div>
+      <div className='black_keys' style={blackKeysStyle}>
+        {blackKeys}
+      </div>
+    </div>
+  );
 };

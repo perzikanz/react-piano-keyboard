@@ -12,7 +12,7 @@ export const WHITE_KEY_LEVEL = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
 
 export const BLACK_KEY_WIDTH = 50;
 export const BLACK_KEY_HEIGHT = 225;
-export const BLACK_KEY_SPASE = [40, 100, 35, 35, 50];
+export const BLACK_KEY_SPASE = [50, 40, 100, 35, 35, 50];
 export const BLACK_KEY_LEVEL = ['cs', 'ds', 'fs', 'gs', 'as'];
 
 export const KEY_LEVELS = [
