@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 
 import {
   WHITE_KEY_NUM,
@@ -13,160 +14,165 @@ import {
 } from './constant';
 
 type Props = {
-  srcArray: string[];
-  keyboadLength: number;
-  keyText: boolean;
+  srcArray?: string[];
+  keyboardLength: number;
+  keyText?: boolean;
   firstScale?: number;
   className?: {
-    keyboard: string;
-    whiteKey: string;
-    blackKey: string;
-    text: string;
+    keyboard?: string;
+    whiteKey?: string;
+    blackKey?: string;
+    text?: string;
   };
-  keybardWidth: number;
+  classKeyboard: string;
+  classWhiteKeys: string;
+  classWhiteKey: string;
+  classBlackKeys: string;
+  classBlackKey: string;
+  keyboardWidth: number;
   activeKey?: string[];
 };
 
-export const keyboard: React.FC<Props> = (props) => {
-  const {
-    firstScale = 0,
-    className = {
-      keyboard: 'keyboard',
-      whiteKey: 'whiteKey',
-      blackKey: 'blackKey',
-      text: 'text',
-    },
-  } = props;
-  let whiteKeys: JSX.Element[] = [];
-  let whiteX = 0;
+// export const keyboard: React.FC<Props> = (props) => {
+//   const {
+//     firstScale = 0,
+//     className = {
+//       keyboard: 'keyboard',
+//       whiteKey: 'whiteKey',
+//       blackKey: 'blackKey',
+//       text: 'text',
+//     },
+//   } = props;
+//   let whiteKeys: JSX.Element[] = [];
+//   let whiteX = 0;
 
-  let srcNum = 0;
-  const keyboadLength = props.keyboadLength;
+//   let srcNum = 0;
+//   const keyboardLength = props.keyboardLength;
 
-  for (let i = 0; i < keyboadLength; i++) {
-    let octave = i;
-    for (let i = 0; i < WHITE_KEY_NUM; i++) {
-      const keyName = `${WHITE_KEY_LEVEL[i]}${octave}`;
-      const src = props.srcArray[srcNum];
-      srcNum = srcNum + 1;
-      const audio = new Audio(src);
-      const whiteKey = (
-        <rect
-          x={whiteX}
-          y={0}
-          width={WHITE_KEY_WIDTH}
-          height={WHITE_KEY_HEIGHT}
-          className={className.whiteKey}
-          onMouseDown={() => {
-            playPiano(audio);
-          }}
-          key={keyName}
-        />
-      );
-      whiteKeys.push(whiteKey);
-      whiteX = whiteX + WHITE_KEY_WIDTH;
-    }
-  }
-  if (keyboadLength == 7) {
-    const src = props.srcArray[srcNum];
-    srcNum = srcNum + 1;
-    const audio = new Audio(src);
-    whiteKeys.push(
-      <rect
-        x={whiteX}
-        y={0}
-        width={WHITE_KEY_WIDTH}
-        height={WHITE_KEY_HEIGHT}
-        className={className.whiteKey}
-        onMouseDown={() => {
-          playPiano(audio);
-        }}
-        key='c7'
-      />
-    );
-    whiteX = whiteX + WHITE_KEY_WIDTH;
-  }
+//   for (let i = 0; i < keyboardLength; i++) {
+//     let octave = i;
+//     for (let i = 0; i < WHITE_KEY_NUM; i++) {
+//       const keyName = `${WHITE_KEY_LEVEL[i]}${octave}`;
+//       const src = props.srcArray[srcNum];
+//       srcNum = srcNum + 1;
+//       const audio = new Audio(src);
+//       const whiteKey = (
+//         <rect
+//           x={whiteX}
+//           y={0}
+//           width={WHITE_KEY_WIDTH}
+//           height={WHITE_KEY_HEIGHT}
+//           className={className.whiteKey}
+//           onMouseDown={() => {
+//             playPiano(audio);
+//           }}
+//           key={keyName}
+//         />
+//       );
+//       whiteKeys.push(whiteKey);
+//       whiteX = whiteX + WHITE_KEY_WIDTH;
+//     }
+//   }
+//   if (keyboardLength == 7) {
+//     const src = props.srcArray[srcNum];
+//     srcNum = srcNum + 1;
+//     const audio = new Audio(src);
+//     whiteKeys.push(
+//       <rect
+//         x={whiteX}
+//         y={0}
+//         width={WHITE_KEY_WIDTH}
+//         height={WHITE_KEY_HEIGHT}
+//         className={className.whiteKey}
+//         onMouseDown={() => {
+//           playPiano(audio);
+//         }}
+//         key='c7'
+//       />
+//     );
+//     whiteX = whiteX + WHITE_KEY_WIDTH;
+//   }
 
-  let blackKeys: JSX.Element[] = [];
-  let blackX = 0;
-  for (let i = 0; i < keyboadLength; i++) {
-    let octave = i;
-    blackX = blackX + BLACK_KEY_WIDTH;
-    for (let i = 0; i < BLUCK_KEY_NUM; i++) {
-      const keyName = `${BLACK_KEY_LEVEL[i]}${octave}`;
-      const src = props.srcArray[srcNum];
-      srcNum = srcNum + 1;
-      const audio = new Audio(src);
-      const blackKey = (
-        <rect
-          x={blackX}
-          y={0}
-          width={BLACK_KEY_WIDTH}
-          height={BLACK_KEY_HEIGHT}
-          className={className.blackKey}
-          onMouseDown={() => {
-            playPiano(audio);
-          }}
-          key={keyName}
-        />
-      );
-      blackKeys.push(blackKey);
-      blackX = blackX + BLACK_KEY_WIDTH + BLACK_KEY_SPASE[i];
-    }
-  }
+//   let blackKeys: JSX.Element[] = [];
+//   let blackX = 0;
+//   for (let i = 0; i < keyboardLength; i++) {
+//     let octave = i;
+//     blackX = blackX + BLACK_KEY_WIDTH;
+//     for (let i = 0; i < BLUCK_KEY_NUM; i++) {
+//       const keyName = `${BLACK_KEY_LEVEL[i]}${octave}`;
+//       const src = props.srcArray[srcNum];
+//       srcNum = srcNum + 1;
+//       const audio = new Audio(src);
+//       const blackKey = (
+//         <rect
+//           x={blackX}
+//           y={0}
+//           width={BLACK_KEY_WIDTH}
+//           height={BLACK_KEY_HEIGHT}
+//           className={className.blackKey}
+//           onMouseDown={() => {
+//             playPiano(audio);
+//           }}
+//           key={keyName}
+//         />
+//       );
+//       blackKeys.push(blackKey);
+//       blackX = blackX + BLACK_KEY_WIDTH + BLACK_KEY_SPASE[i];
+//     }
+//   }
 
-  let keyTexts: JSX.Element[] = [];
-  if (props.keyText == true) {
-    let textX = 20;
-    const TEXT_Y = 380;
-    let n = firstScale;
-    for (let i = 0; i <= keyboadLength; i++) {
-      const keyText = (
-        <text x={textX} y={TEXT_Y} className={className.text} key={`Ct${i}`}>
-          C{n}
-        </text>
-      );
-      keyTexts.push(keyText);
-      textX = textX + 560;
-      n = n + 1;
-    }
-  }
+//   let keyTexts: JSX.Element[] = [];
+//   if (props.keyText == true) {
+//     let textX = 20;
+//     const TEXT_Y = 380;
+//     let n = firstScale;
+//     for (let i = 0; i <= keyboardLength; i++) {
+//       const keyText = (
+//         <text x={textX} y={TEXT_Y} className={className.text} key={`Ct${i}`}>
+//           C{n}
+//         </text>
+//       );
+//       keyTexts.push(keyText);
+//       textX = textX + 560;
+//       n = n + 1;
+//     }
+//   }
 
-  const SVG_WIDTH = whiteX + 2;
-  const SVG_HEIGHT = WHITE_KEY_HEIGHT + 2;
+//   const SVG_WIDTH = whiteX + 2;
+//   const SVG_HEIGHT = WHITE_KEY_HEIGHT + 2;
 
-  return (
-    <div className={className.keyboard}>
-      <svg
-        width={SVG_WIDTH}
-        height={SVG_HEIGHT}
-        viewBox={`-1 -1 ${SVG_WIDTH} ${SVG_HEIGHT}`}
-      >
-        {whiteKeys}
-        {blackKeys}
-        {keyTexts}
-      </svg>
-    </div>
-  );
-};
+//   return (
+//     <div className={className.keyboard}>
+//       <svg
+//         width={SVG_WIDTH}
+//         height={SVG_HEIGHT}
+//         viewBox={`-1 -1 ${SVG_WIDTH} ${SVG_HEIGHT}`}
+//       >
+//         {whiteKeys}
+//         {blackKeys}
+//         {keyTexts}
+//       </svg>
+//     </div>
+//   );
+// };
 
-const playPiano = (audio: HTMLAudioElement) => {
-  if (!audio.seeking || audio.currentTime !== 0) {
-    audio.currentTime = 0;
-  }
-  audio.play();
-};
+// const playPiano = (audio: HTMLAudioElement) => {
+//   if (!audio.seeking || audio.currentTime !== 0) {
+//     audio.currentTime = 0;
+//   }
+//   audio.play();
+// };
 
-export const divKeyboard: React.FC<Props> = (props) => {
+export const Keyboard: React.FC<Props> = (props) => {
   const { firstScale = 0 } = props;
   const { activeKey = [] } = props;
 
   let whiteKeys: JSX.Element[] = [];
   let blackKeys: JSX.Element[] = [];
 
-  const keybardWidth = `${props.keybardWidth}px`;
+  const keyboardWidth = `${props.keyboardWidth}px`;
   const keybardStyle = {
-    width: keybardWidth,
+    width: keyboardWidth,
   };
 
   const whiteKeysStyle = {
@@ -189,11 +195,11 @@ export const divKeyboard: React.FC<Props> = (props) => {
   let blackKeyMargin: string[] = [];
   for (const spase of BLACK_KEY_SPASE) {
     const per = (1 / 7) * (spase / 80);
-    const margin = `${per * props.keybardWidth}px`;
+    const margin = `${per * (props.keyboardWidth / props.keyboardLength)}px`;
     blackKeyMargin.push(margin);
   }
 
-  for (let i = 0; i < props.keyboadLength; i++) {
+  for (let i = 0; i < props.keyboardLength; i++) {
     let octave = i;
     for (let i = 0; i < WHITE_KEY_NUM; i++) {
       const keyScale = firstScale + octave;
@@ -207,7 +213,7 @@ export const divKeyboard: React.FC<Props> = (props) => {
       const whiteKey = (
         <div
           key={keyName}
-          className={`white_key ${keyName}${selectActive}`}
+          className={props.classWhiteKey}
           style={whiteKeyStyle}
         ></div>
       );
@@ -225,7 +231,7 @@ export const divKeyboard: React.FC<Props> = (props) => {
       const blackKey = (
         <div
           key={keyName}
-          className={`black_key ${keyName}${selectActive}`}
+          className={props.classBlackKey}
           style={{ ...blackKeyStyle, marginLeft: blackKeyMargin[i] }}
         ></div>
       );
@@ -234,11 +240,11 @@ export const divKeyboard: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className='keyboard' style={keybardStyle}>
-      <div className='white_keys' style={whiteKeysStyle}>
+    <div className={props.classKeyboard} style={keybardStyle}>
+      <div className={props.classWhiteKeys} style={whiteKeysStyle}>
         {whiteKeys}
       </div>
-      <div className='black_keys' style={blackKeysStyle}>
+      <div className={props.classBlackKeys} style={blackKeysStyle}>
         {blackKeys}
       </div>
     </div>
