@@ -23,8 +23,13 @@ type Props = {
 };
 
 export const Keyboard: React.FC<Props> = (props) => {
-  const { firstScale = 0 } = props;
-  const { activeKeys = [] } = props;
+  const {
+    firstScale = 0,
+    activeKeys = [],
+    classWhiteKey,
+    classBlackKey,
+    classActiveKey,
+  } = props;
 
   let whiteKeys: JSX.Element[] = [];
   let blackKeys: JSX.Element[] = [];
@@ -55,16 +60,16 @@ export const Keyboard: React.FC<Props> = (props) => {
     for (let i = 0; i < WHITE_KEY_NUM; i++) {
       const keyScale = firstScale + octave;
       const keyName = `${WHITE_KEY_LEVEL[i]}${keyScale}`;
-      let activeKey = '';
+      let isActive = false;
       for (const key of activeKeys) {
         if (keyName == key) {
-          activeKey = ' active_key';
+          isActive = true;
         }
       }
       const whiteKey = (
         <div
           key={keyName}
-          className={props.classWhiteKey}
+          className={clsx(classWhiteKey, isActive && classActiveKey)}
           style={whiteKeyStyle}
         ></div>
       );
@@ -73,16 +78,16 @@ export const Keyboard: React.FC<Props> = (props) => {
     for (let i = 0; i < BLUCK_KEY_NUM; i++) {
       const keyScale = firstScale + octave;
       const keyName = `${BLACK_KEY_LEVEL[i]}${keyScale}`;
-      let activeKey = '';
+      let isActive = false;
       for (const key of activeKeys) {
         if (keyName == key) {
-          activeKey = ' active_key';
+          isActive = true;
         }
       }
       const blackKey = (
         <div
           key={keyName}
-          className={props.classBlackKey}
+          className={clsx(classBlackKey, isActive && classActiveKey)}
           style={{ ...blackKeyStyle, marginLeft: blackKeyMargin[i] }}
         ></div>
       );
