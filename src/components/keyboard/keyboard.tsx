@@ -1,13 +1,13 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import {
-  WHITE_KEY_NUM,
-  BLUCK_KEY_NUM,
-  WHITE_KEY_LEVEL,
-  BLACK_KEY_SPASE,
-  BLACK_KEY_LEVEL,
-} from './constant';
+const WHITE_KEY_NUM = 7;
+const BLUCK_KEY_NUM = 5;
+
+const WHITE_KEY_LEVEL = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+
+const BLACK_KEY_SPASE = [50, 40, 100, 35, 35, 50];
+const BLACK_KEY_LEVEL = ['Db', 'Eb', 'Gb', 'Ab', 'Bb'];
 
 type Props = {
   keyboardLength: number;
