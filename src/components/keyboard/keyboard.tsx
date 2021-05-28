@@ -20,6 +20,7 @@ type Props = {
   classBlackKey: string;
   classActiveKey?: string;
   activeKeys?: string[];
+  noteSounds: { [keyName: string]: HTMLAudioElement };
 };
 
 export const Keyboard: React.FC<Props> = (props) => {
@@ -29,6 +30,7 @@ export const Keyboard: React.FC<Props> = (props) => {
     classWhiteKey,
     classBlackKey,
     classActiveKey,
+    noteSounds,
   } = props;
 
   let whiteKeys: JSX.Element[] = [];
@@ -71,6 +73,13 @@ export const Keyboard: React.FC<Props> = (props) => {
           key={keyName}
           className={clsx(classWhiteKey, isActive && classActiveKey)}
           style={whiteKeyStyle}
+          onClick={() => {
+            const audio = noteSounds[`${keyName}`];
+            if (!audio.seeking || audio.currentTime !== 0) {
+              audio.currentTime = 0;
+            }
+            audio.play();
+          }}
         ></div>
       );
       whiteKeys.push(whiteKey);
@@ -89,6 +98,13 @@ export const Keyboard: React.FC<Props> = (props) => {
           key={keyName}
           className={clsx(classBlackKey, isActive && classActiveKey)}
           style={{ ...blackKeyStyle, marginLeft: blackKeyMargin[i] }}
+          onClick={() => {
+            const audio = noteSounds[`${keyName}`];
+            if (!audio.seeking || audio.currentTime !== 0) {
+              audio.currentTime = 0;
+            }
+            audio.play();
+          }}
         ></div>
       );
       blackKeys.push(blackKey);
