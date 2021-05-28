@@ -10,9 +10,8 @@ const BLACK_KEY_SPASE = [50, 40, 100, 35, 35, 50];
 const BLACK_KEY_LEVEL = ['Db', 'Eb', 'Gb', 'Ab', 'Bb'];
 
 type Props = {
-  keyboardLength: number;
   keyboardWidth: number;
-  firstScale?: number;
+  keyScale?: number;
   classKeyboard: string;
   classWhiteKeys: string;
   classWhiteKey: string;
@@ -25,7 +24,7 @@ type Props = {
 
 export const Keyboard: React.FC<Props> = (props) => {
   const {
-    firstScale = 0,
+    keyScale = 0,
     activeKeys = [],
     classWhiteKey,
     classBlackKey,
@@ -53,62 +52,57 @@ export const Keyboard: React.FC<Props> = (props) => {
   let blackKeyMargin: string[] = [];
   for (const spase of BLACK_KEY_SPASE) {
     const per = (1 / 7) * (spase / 80);
-    const margin = `${per * (props.keyboardWidth / props.keyboardLength)}px`;
+    const margin = `${per * props.keyboardWidth}px`;
     blackKeyMargin.push(margin);
   }
 
-  for (let i = 0; i < props.keyboardLength; i++) {
-    let octave = i;
-    for (let i = 0; i < WHITE_KEY_NUM; i++) {
-      const keyScale = firstScale + octave;
-      const keyName = `${WHITE_KEY_LEVEL[i]}${keyScale}`;
-      let isActive = false;
-      for (const key of activeKeys) {
-        if (keyName == key) {
-          isActive = true;
-        }
+  for (let i = 0; i < WHITE_KEY_NUM; i++) {
+    const keyName = `${WHITE_KEY_LEVEL[i]}${keyScale}`;
+    let isActive = false;
+    for (const key of activeKeys) {
+      if (keyName == key) {
+        isActive = true;
       }
-      const whiteKey = (
-        <div
-          key={keyName}
-          className={clsx(classWhiteKey, isActive && classActiveKey)}
-          style={whiteKeyStyle}
-          onClick={() => {
-            const audio = noteSounds[`${keyName}`];
-            if (!audio.seeking || audio.currentTime !== 0) {
-              audio.currentTime = 0;
-            }
-            audio.play();
-          }}
-        ></div>
-      );
-      whiteKeys.push(whiteKey);
     }
-    for (let i = 0; i < BLUCK_KEY_NUM; i++) {
-      const keyScale = firstScale + octave;
-      const keyName = `${BLACK_KEY_LEVEL[i]}${keyScale}`;
-      let isActive = false;
-      for (const key of activeKeys) {
-        if (keyName == key) {
-          isActive = true;
-        }
+    const whiteKey = (
+      <div
+        key={keyName}
+        className={clsx(classWhiteKey, isActive && classActiveKey)}
+        style={whiteKeyStyle}
+        onClick={() => {
+          const audio = noteSounds[`${keyName}`];
+          if (!audio.seeking || audio.currentTime !== 0) {
+            audio.currentTime = 0;
+          }
+          audio.play();
+        }}
+      ></div>
+    );
+    whiteKeys.push(whiteKey);
+  }
+  for (let i = 0; i < BLUCK_KEY_NUM; i++) {
+    const keyName = `${BLACK_KEY_LEVEL[i]}${keyScale}`;
+    let isActive = false;
+    for (const key of activeKeys) {
+      if (keyName == key) {
+        isActive = true;
       }
-      const blackKey = (
-        <div
-          key={keyName}
-          className={clsx(classBlackKey, isActive && classActiveKey)}
-          style={{ ...blackKeyStyle, marginLeft: blackKeyMargin[i] }}
-          onClick={() => {
-            const audio = noteSounds[`${keyName}`];
-            if (!audio.seeking || audio.currentTime !== 0) {
-              audio.currentTime = 0;
-            }
-            audio.play();
-          }}
-        ></div>
-      );
-      blackKeys.push(blackKey);
     }
+    const blackKey = (
+      <div
+        key={keyName}
+        className={clsx(classBlackKey, isActive && classActiveKey)}
+        style={{ ...blackKeyStyle, marginLeft: blackKeyMargin[i] }}
+        onClick={() => {
+          const audio = noteSounds[`${keyName}`];
+          if (!audio.seeking || audio.currentTime !== 0) {
+            audio.currentTime = 0;
+          }
+          audio.play();
+        }}
+      ></div>
+    );
+    blackKeys.push(blackKey);
   }
 
   return (
