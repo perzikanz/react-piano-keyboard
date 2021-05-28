@@ -1,164 +1,114 @@
-import React, { useState } from 'react';
+import React from 'react';
+import clsx from 'clsx';
 
-import {
-  WHITE_KEY_NUM,
-  BLUCK_KEY_NUM,
-  WHITE_KEY_WIDTH,
-  WHITE_KEY_HEIGHT,
-  WHITE_KEY_LEVEL,
-  BLACK_KEY_WIDTH,
-  BLACK_KEY_HEIGHT,
-  BLACK_KEY_SPASE,
-  BLACK_KEY_LEVEL,
-} from './constant';
+const WHITE_KEY_NUM = 7;
+const BLUCK_KEY_NUM = 5;
 
-import style from './keyboardStyle';
+const WHITE_KEY_LEVEL = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+
+const BLACK_KEY_SPASE = [50, 40, 100, 35, 35, 50];
+const BLACK_KEY_LEVEL = ['Db', 'Eb', 'Gb', 'Ab', 'Bb'];
 
 type Props = {
-  srcArray: string[];
-  keyboadLength: number;
-  keyText: boolean;
-  firstScale: number;
+  keyboardWidth: number;
+  keyScale?: number;
+  classKeyboard: string;
+  classWhiteKeys: string;
+  classWhiteKey: string;
+  classBlackKeys: string;
+  classBlackKey: string;
+  classActiveKey?: string;
+  activeKeys?: string[];
+  noteSounds: { [keyName: string]: HTMLAudioElement };
 };
 
-export const keyboard: React.FC<Props> = (props) => {
+export const Keyboard: React.FC<Props> = (props) => {
+  const {
+    keyScale = 0,
+    activeKeys = [],
+    classWhiteKey,
+    classBlackKey,
+    classActiveKey,
+    noteSounds,
+  } = props;
+
   let whiteKeys: JSX.Element[] = [];
-  let whiteX = 0;
-
-  let srcNum = 0;
-  const keyboadLength = props.keyboadLength;
-
-  for (let i = 0; i < keyboadLength; i++) {
-    let octave = i;
-    for (let i = 0; i < WHITE_KEY_NUM; i++) {
-      const keyName = `${WHITE_KEY_LEVEL[i]}${octave}`;
-      const src = props.srcArray[srcNum];
-      srcNum = srcNum + 1;
-      const audio = new Audio(src);
-      const [hover, setHover] = useState(false);
-      const whiteKey = (
-        <rect
-          x={whiteX}
-          y={0}
-          width={WHITE_KEY_WIDTH}
-          height={WHITE_KEY_HEIGHT}
-          style={{ ...style.whiteKey, ...(hover ? style.whiteKeyHover : null) }}
-          onMouseDown={() => {
-            playPiano(audio);
-          }}
-          onMouseOver={() => {
-            setHover(true);
-          }}
-          onMouseOut={() => {
-            setHover(false);
-          }}
-          key={keyName}
-        />
-      );
-      whiteKeys.push(whiteKey);
-      whiteX = whiteX + WHITE_KEY_WIDTH;
-    }
-  }
-  if (keyboadLength == 7) {
-    const src = props.srcArray[srcNum];
-    srcNum = srcNum + 1;
-    const audio = new Audio(src);
-    const [hover, setHover] = useState(false);
-    whiteKeys.push(
-      <rect
-        x={whiteX}
-        y={0}
-        width={WHITE_KEY_WIDTH}
-        height={WHITE_KEY_HEIGHT}
-        style={{ ...style.whiteKey, ...(hover ? style.whiteKeyHover : null) }}
-        onMouseDown={() => {
-          playPiano(audio);
-        }}
-        onMouseOver={() => {
-          setHover(true);
-        }}
-        onMouseOut={() => {
-          setHover(false);
-        }}
-        key='c7'
-      />
-    );
-    whiteX = whiteX + WHITE_KEY_WIDTH;
-  }
-
   let blackKeys: JSX.Element[] = [];
-  let blackX = 0;
-  for (let i = 0; i < keyboadLength; i++) {
-    let octave = i;
-    blackX = blackX + BLACK_KEY_WIDTH;
-    for (let i = 0; i < BLUCK_KEY_NUM; i++) {
-      const keyName = `${BLACK_KEY_LEVEL[i]}${octave}`;
-      const src = props.srcArray[srcNum];
-      srcNum = srcNum + 1;
-      const audio = new Audio(src);
-      const [hover, setHover] = useState(false);
-      const blackKey = (
-        <rect
-          x={blackX}
-          y={0}
-          width={BLACK_KEY_WIDTH}
-          height={BLACK_KEY_HEIGHT}
-          style={{ ...style.blackKey, ...(hover ? style.blackKeyHover : null) }}
-          onMouseDown={() => {
-            playPiano(audio);
-          }}
-          onMouseOver={() => {
-            setHover(true);
-          }}
-          onMouseOut={() => {
-            setHover(false);
-          }}
-          key={keyName}
-        />
-      );
-      blackKeys.push(blackKey);
-      blackX = blackX + BLACK_KEY_WIDTH + BLACK_KEY_SPASE[i];
-    }
+
+  const keyboardWidth = `${props.keyboardWidth}px`;
+  const keybardStyle = {
+    width: keyboardWidth,
+  };
+
+  const whiteKeyWdth = `${(1 / 7) * 100}%`;
+  const whiteKeyStyle = {
+    width: whiteKeyWdth,
+  };
+
+  const blackKeyWidth = `${(1 / 7) * (5 / 8) * 100}%`;
+  const blackKeyStyle = {
+    width: blackKeyWidth,
+  };
+  let blackKeyMargin: string[] = [];
+  for (const spase of BLACK_KEY_SPASE) {
+    const per = (1 / 7) * (spase / 80);
+    const margin = `${per * props.keyboardWidth}px`;
+    blackKeyMargin.push(margin);
   }
 
-  let keyTexts: JSX.Element[] = [];
-  if (props.keyText == true) {
-    let textX = 20;
-    const TEXT_Y = 380;
-    let n = props.firstScale;
-    for (let i = 0; i <= keyboadLength; i++) {
-      const keyText = (
-        <text x={textX} y={TEXT_Y} style={style.keyText} key={`Ct${i}`}>
-          C{n}
-        </text>
-      );
-      keyTexts.push(keyText);
-      textX = textX + 560;
-      n = n + 1;
+  for (let i = 0; i < WHITE_KEY_NUM; i++) {
+    const keyName = `${WHITE_KEY_LEVEL[i]}${keyScale}`;
+    let isActive = false;
+    for (const key of activeKeys) {
+      if (keyName == key) {
+        isActive = true;
+      }
     }
+    const whiteKey = (
+      <div
+        key={keyName}
+        className={clsx(classWhiteKey, isActive && classActiveKey)}
+        style={whiteKeyStyle}
+        onClick={() => {
+          const audio = noteSounds[`${keyName}`];
+          if (!audio.seeking || audio.currentTime !== 0) {
+            audio.currentTime = 0;
+          }
+          audio.play();
+        }}
+      ></div>
+    );
+    whiteKeys.push(whiteKey);
   }
-
-  const SVG_WIDTH = whiteX + 2;
-  const SVG_HEIGHT = WHITE_KEY_HEIGHT + 2;
+  for (let i = 0; i < BLUCK_KEY_NUM; i++) {
+    const keyName = `${BLACK_KEY_LEVEL[i]}${keyScale}`;
+    let isActive = false;
+    for (const key of activeKeys) {
+      if (keyName == key) {
+        isActive = true;
+      }
+    }
+    const blackKey = (
+      <div
+        key={keyName}
+        className={clsx(classBlackKey, isActive && classActiveKey)}
+        style={{ ...blackKeyStyle, marginLeft: blackKeyMargin[i] }}
+        onClick={() => {
+          const audio = noteSounds[`${keyName}`];
+          if (!audio.seeking || audio.currentTime !== 0) {
+            audio.currentTime = 0;
+          }
+          audio.play();
+        }}
+      ></div>
+    );
+    blackKeys.push(blackKey);
+  }
 
   return (
-    <div style={style.keyboard}>
-      <svg
-        width={SVG_WIDTH}
-        height={SVG_HEIGHT}
-        viewBox={`-1 -1 ${SVG_WIDTH} ${SVG_HEIGHT}`}
-      >
-        {whiteKeys}
-        {blackKeys}
-        {keyTexts}
-      </svg>
+    <div className={props.classKeyboard} style={keybardStyle}>
+      <div className={props.classWhiteKeys}>{whiteKeys}</div>
+      <div className={props.classBlackKeys}>{blackKeys}</div>
     </div>
   );
-};
-
-const playPiano = (audio: HTMLAudioElement) => {
-  if (!audio.seeking || audio.currentTime !== 0) {
-    audio.currentTime = 0;
-  }
-  audio.play();
 };
